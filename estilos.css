@@ -1,1 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eefcff;
+    margin: 20px;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    padding: 10px;
+}
+
+.materia {
+    background-color: #66ccee;
+    border: 2px solid #3399cc;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.materia.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #b0e0e6;
+    border-color: #88b6b8;
+}
+
+.materia.approved {
+    background-color: #3399cc;
+    color: #fff;
+}
+
+.materia h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.btn {
+    background-color: #fff;
+    border: 2px solid #3399cc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btn:hover {
+    background-color: #cceeff;
+}
+
+.note-box {
+    border: 2px solid #3399cc;
+    border-radius: 5px;
+    padding: 5px;
+    width: 80%;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
