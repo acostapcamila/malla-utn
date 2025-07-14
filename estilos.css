@@ -51,6 +51,10 @@ h1 {
     border-color: #0077b6;
 }
 
+.materia.approved h3 {
+    text-decoration: line-through;
+}
+
 .materia h3 {
     margin: 0 0 10px 0;
     font-size: 1.1em;
@@ -82,4 +86,4 @@ h1 {
     font-weight: bold;
     margin-top: 12px;
     background-color: #e0f7ff;
-}
+} 
