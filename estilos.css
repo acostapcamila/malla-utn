@@ -87,3 +87,19 @@ h1 {
     margin-top: 12px;
     background-color: #e0f7ff;
 } 
+.nivel {
+  margin-bottom: 40px;
+}
+
+.nivel h2 {
+  text-align: center;
+  color: #0096c7;
+  margin-bottom: 20px;
+}
+
+.nivel .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 10px;
+}
