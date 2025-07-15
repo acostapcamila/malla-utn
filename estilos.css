@@ -1,62 +1,65 @@
-/* Contenedor principal que agrupa todos los niveles en columnas adaptables */
-#contenedor-niveles {
-  display: flex;
-  flex-wrap: wrap;           /* permite que columnas bajen si no entran */
-  gap: 20px;                 /* espacio entre columnas */
-  padding: 20px;
-  justify-content: center;   /* centra columnas */
-  width: 100vw;              /* usa todo el ancho visible */
-  box-sizing: border-box;
-  overflow-x: hidden;        /* evita scroll horizontal */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #eefcff;
+  margin: 20px;
+  color: #333;
 }
 
-/* Cada columna (nivel) */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2em;
+  color: #0077b6;
+}
+
+#resumen {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.2em;
+}
+
 .nivel {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  margin-bottom: 40px;
   border-left: 5px solid #0077b6;
   padding-left: 15px;
-  min-width: 180px;          /* ancho mínimo */
-  max-width: 220px;          /* ancho máximo */
-  background-color: #e0f7ff;
-  border-radius: 6px;
-  padding: 15px;
-  box-sizing: border-box;
-  flex-grow: 1;              /* para que crezcan proporcionalmente */
+  gap: 10px;
 }
 
-/* Título del nivel, arriba de la columna */
 .nivel h2 {
-  writing-mode: horizontal-tb;
-  transform: none;
-  margin-bottom: 20px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  margin: 0;
+  padding: 6px 10px;
   color: #0096c7;
-  font-size: 1.3em;
-  font-weight: bold;
+  font-size: 1.2em;
+  min-width: 40px;
+  text-align: center;
   border: 2px solid #0077b6;
   border-radius: 6px;
-  padding: 6px 12px;
-  width: 100%;
-  text-align: center;
-  background-color: #caf0f8;
+  background-color: #e0f7ff;
 }
 
-/* Contenedor de materias: columna vertical */
 .nivel .grid-container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 15px;
-  width: 100%;
+  padding: 10px;
+  background-color: #e0f7ff;
+  border-radius: 6px;
+  flex-grow: 1; /* para que ocupe el ancho restante */
 }
 
-/* Cada materia */
 .materia {
   background-color: #caf0f8;
   border: 2px solid #90e0ef;
   border-radius: 10px;
   padding: 15px;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
 }
@@ -84,29 +87,35 @@
 }
 
 .materia h3 {
-  margin: 0;
+  margin: 0 0 10px 0;
   font-size: 1.1em;
   font-weight: 600;
   color: inherit;
 }
 
-/* Otros estilos que puedas tener */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #eefcff;
-  margin: 20px;
-  color: #333;
+.btn {
+  background-color: #ffffff;
+  border: 2px solid #0077b6;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 2em;
-  color: #0077b6;
+.btn:hover {
+  background-color: #d0f0ff;
+  font-weight: 600;
 }
 
-#resumen {
+.note-box {
+  border: 2px solid #0077b6;
+  border-radius: 6px;
+  padding: 6px;
+  width: 90%;
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 12px;
+  background-color: #e0f7ff;
 }
