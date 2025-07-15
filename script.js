@@ -1,40 +1,21 @@
 const materias = [
-  { codigo: 'Int1', nombre: 'Integración I', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Ingeniería y Sociedad', nombre: 'Ingeniería y Sociedad', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'AlgGeometría', nombre: 'Álgebra y Geometría Analítica', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'AnalMat1', nombre: 'Análisis Matemático I', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'AnalMat2', nombre: 'Análisis Matemático II', correlatividad: ['AnalMat1'], aprobado: false, nota: null },
-  { codigo: 'QuímicaGen', nombre: 'Química General', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'SistemasRep', nombre: 'Sistemas de Representación', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'FundInformatica', nombre: 'Fundamentos de Informática', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Int2', nombre: 'Integración II', correlatividad: ['Int1'], aprobado: false, nota: null },
-  { codigo: 'ProbEst', nombre: 'Probabilidad y Estadística', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'QInorg', nombre: 'Química Inorgánica', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Fisica1', nombre: 'Física I', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Fisica2', nombre: 'Física II', correlatividad: ['Fisica1'], aprobado: false, nota: null },
-  { codigo: 'QOrganica', nombre: 'Química Orgánica', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Ingles1', nombre: 'Inglés I', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'MatSup', nombre: 'Matemática Superior Aplicada', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Int3', nombre: 'Integración III', correlatividad: ['Int2'], aprobado: false, nota: null },
-  { codigo: 'Termo', nombre: 'Termodinámica', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Economia', nombre: 'Economía', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Legislacion', nombre: 'Legislación', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'MecanicaElectrica', nombre: 'Mecánica Eléctrica Industrial', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'FisicoQ', nombre: 'Físico Química', correlatividad: ['Fisica2'], aprobado: false, nota: null },
-  { codigo: 'FenTransporte', nombre: 'Fenómenos de Transporte', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'QAnalitica', nombre: 'Química Analítica', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Ingles2', nombre: 'Inglés II', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Int4', nombre: 'Integración IV', correlatividad: ['Int3'], aprobado: false, nota: null },
-  { codigo: 'OperUnit1', nombre: 'Operaciones Unitarias I', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'EnergiaTermica', nombre: 'Tecnología de la Energía Térmica', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'Biotecnologia', nombre: 'Biotecnología', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'OperUnit2', nombre: 'Operaciones Unitarias II', correlatividad: ['OperUnit1'], aprobado: false, nota: null },
-  { codigo: 'ReaccionesQuimicas', nombre: 'Ingeniería de las Reacciones Químicas', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'ControlProcesos', nombre: 'Control Estadísticos de Procesos', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'OrganizacionIndustrial', nombre: 'Organización Industrial', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'ControlAutomatico', nombre: 'Control Automático de Procesos', correlatividad: [], aprobado: false, nota: null },
-  { codigo: 'ProyectoFinal', nombre: 'Proyecto Final - Integración V', correlatividad: ['Int4'], aprobado: false, nota: null }
+  // ... (todas tus materias, sin cambios)
 ];
+
+function guardarEstado() {
+  localStorage.setItem('estadoMaterias', JSON.stringify(materias));
+}
+
+function cargarEstado() {
+  const datos = localStorage.getItem('estadoMaterias');
+  if (datos) {
+    const materiasGuardadas = JSON.parse(datos);
+    materiasGuardadas.forEach((mGuardada, i) => {
+      materias[i].aprobado = mGuardada.aprobado;
+      materias[i].nota = mGuardada.nota;
+    });
+  }
+}
 
 function puedeDesbloquear(materia) {
   if (materia.aprobado) return false;
@@ -45,6 +26,11 @@ function puedeDesbloquear(materia) {
 }
 
 const container = document.getElementById('materias-container');
+const resumenDiv = document.createElement('div');
+resumenDiv.id = 'resumen';
+resumenDiv.style.margin = '30px';
+resumenDiv.style.fontWeight = 'bold';
+document.body.insertBefore(resumenDiv, container);
 
 function crearMateria(materia) {
   const div = document.createElement('div');
@@ -61,6 +47,11 @@ function crearMateria(materia) {
   notaInput.max = 100;
   notaInput.value = materia.nota || '';
   notaInput.className = 'note-box';
+  notaInput.onchange = () => {
+    materia.nota = notaInput.value;
+    guardarEstado();
+    actualizarResumen();
+  };
   div.appendChild(notaInput);
 
   div.onclick = () => {
@@ -69,6 +60,8 @@ function crearMateria(materia) {
       notaInput.style.pointerEvents = 'auto';
       actualizarMateria(materia);
       desbloquearRequisitos();
+      guardarEstado();
+      actualizarResumen();
     }
   };
 
@@ -97,14 +90,32 @@ function desbloquearRequisitos() {
   });
 }
 
+function actualizarResumen() {
+  const aprobadas = materias.filter(m => m.aprobado).length;
+  const total = materias.length;
+  const faltantes = total - aprobadas;
+  const conNotas = materias.filter(m => m.aprobado && m.nota !== null && m.nota !== '').map(m => parseFloat(m.nota));
+  const promedio = conNotas.length ? (conNotas.reduce((a, b) => a + b, 0) / conNotas.length).toFixed(2) : 'N/A';
+
+  resumenDiv.innerHTML = `✅ Materias aprobadas: ${aprobadas}/${total}  | ❌ Faltan: ${faltantes}  | 📊 Promedio: ${promedio}`;
+}
+
 function init() {
+  cargarEstado();
   materias.forEach(m => {
     const materiaDiv = crearMateria(m);
     container.appendChild(materiaDiv);
     if (puedeDesbloquear(m)) {
       materiaDiv.classList.remove('disabled');
     }
+    if (m.aprobado) {
+      actualizarMateria(m);
+      const notaInput = materiaDiv.querySelector('.note-box');
+      notaInput.value = m.nota || '';
+      notaInput.style.pointerEvents = 'auto';
+    }
   });
+  actualizarResumen();
 }
 
 init();
