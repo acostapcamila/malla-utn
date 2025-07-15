@@ -24,40 +24,31 @@ h1 {
   margin-bottom: 40px;
   border-left: 5px solid #0077b6;
   padding-left: 15px;
+  gap: 10px;
 }
 
 .nivel h2 {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  margin-right: 20px;
+  margin: 0;
+  padding: 6px 10px;
   color: #0096c7;
   font-size: 1.2em;
   min-width: 40px;
   text-align: center;
   border: 2px solid #0077b6;
   border-radius: 6px;
-  padding: 6px;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.grid-container {
-  display: flex; /* si quieres grid, cambia aquí */
-  flex-wrap: wrap;
-  gap: 15px;
-  padding: 10px;
-  /* Si quieres usar grid en lugar de flex, reemplaza por:
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-     gap: 20px;
-  */
+  background-color: #e0f7ff;
 }
 
 .nivel .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+  padding: 10px;
   background-color: #e0f7ff;
-  font-weight: bold;
-  margin-top: 8px;
-  pointer-events: none; /* revisa si quieres esta propiedad */
+  border-radius: 6px;
+  flex-grow: 1; /* para que ocupe el ancho restante */
 }
 
 .materia {
@@ -65,9 +56,7 @@ h1 {
   border: 2px solid #90e0ef;
   border-radius: 10px;
   padding: 15px;
-  width: 160px;
   cursor: pointer;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -117,10 +106,7 @@ h1 {
 
 .btn:hover {
   background-color: #d0f0ff;
-  margin: 0 0 10px 0;
-  font-size: 1em;
   font-weight: 600;
-  color: inherit;
 }
 
 .note-box {
