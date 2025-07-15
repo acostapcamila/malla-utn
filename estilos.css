@@ -1,65 +1,57 @@
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #eefcff;
-  margin: 20px;
-  color: #333;
+/* Contenedor principal que agrupa todos los niveles */
+#contenedor-niveles {
+  display: flex;
+  gap: 30px; /* espacio entre columnas */
+  padding: 20px;
+  justify-content: center; /* centra las columnas horizontalmente */
+  flex-wrap: nowrap; /* evita que las columnas se acomoden en filas */
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 2em;
-  color: #0077b6;
-}
-
-#resumen {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 1.2em;
-}
-
+/* Cada columna de nivel */
 .nivel {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 40px;
+  flex-direction: column;
+  align-items: center;
   border-left: 5px solid #0077b6;
   padding-left: 15px;
-  gap: 10px;
+  min-width: 180px;
+  background-color: #e0f7ff;
+  border-radius: 6px;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
+/* Título del nivel, arriba de la columna */
 .nivel h2 {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  margin: 0;
-  padding: 6px 10px;
+  writing-mode: horizontal-tb; /* título normal horizontal */
+  transform: none;
+  margin-bottom: 20px;
   color: #0096c7;
-  font-size: 1.2em;
-  min-width: 40px;
-  text-align: center;
+  font-size: 1.3em;
+  font-weight: bold;
   border: 2px solid #0077b6;
   border-radius: 6px;
-  background-color: #e0f7ff;
+  padding: 6px 12px;
+  width: 100%;
+  text-align: center;
+  background-color: #caf0f8;
 }
 
+/* Contenedor de materias dentro del nivel: columna vertical */
 .nivel .grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 15px;
-  padding: 10px;
-  background-color: #e0f7ff;
-  border-radius: 6px;
-  flex-grow: 1; /* para que ocupe el ancho restante */
+  width: 100%;
 }
 
+/* Cada materia */
 .materia {
   background-color: #caf0f8;
   border: 2px solid #90e0ef;
   border-radius: 10px;
   padding: 15px;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
   transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
 }
@@ -87,35 +79,8 @@ h1 {
 }
 
 .materia h3 {
-  margin: 0 0 10px 0;
+  margin: 0;
   font-size: 1.1em;
   font-weight: 600;
   color: inherit;
-}
-
-.btn {
-  background-color: #ffffff;
-  border: 2px solid #0077b6;
-  border-radius: 6px;
-  padding: 6px 12px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-bottom: 10px;
-  transition: background-color 0.3s;
-}
-
-.btn:hover {
-  background-color: #d0f0ff;
-  font-weight: 600;
-}
-
-.note-box {
-  border: 2px solid #0077b6;
-  border-radius: 6px;
-  padding: 6px;
-  width: 90%;
-  text-align: center;
-  font-weight: bold;
-  margin-top: 12px;
-  background-color: #e0f7ff;
 }
