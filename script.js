@@ -111,7 +111,7 @@ function desbloquearRequisitos() {
   });
 }
 
-ffunction init() {
+function init() {
   cargarEstado();
   materias.forEach(m => {
     const materiaDiv = crearMateria(m);
