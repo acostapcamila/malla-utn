@@ -1,5 +1,48 @@
 const materias = [
-  // ... (todas tus materias, sin cambios)
+  // Nivel I
+  { codigo: 'Int1', nombre: 'Integración I', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'IngSoc', nombre: 'Ingeniería y Sociedad', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'AlgGeo', nombre: 'Álgebra y Geometría Analítica', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'AM1', nombre: 'Análisis Matemático I', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'AM2', nombre: 'Análisis Matemático II', correlatividad: ['AM1'], aprobado: false, nota: null },
+  { codigo: 'QG', nombre: 'Química General', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'SR', nombre: 'Sistemas de Representación', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'FI', nombre: 'Fundamentos de Informática', correlatividad: [], aprobado: false, nota: null },
+
+  // Nivel II
+  { codigo: 'Int2', nombre: 'Integración II', correlatividad: ['Int1'], aprobado: false, nota: null },
+  { codigo: 'PE', nombre: 'Probabilidad y Estadística', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'QI', nombre: 'Química Inorgánica', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'F1', nombre: 'Física I', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'F2', nombre: 'Física II', correlatividad: ['F1'], aprobado: false, nota: null },
+  { codigo: 'QO', nombre: 'Química Orgánica', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'I1', nombre: 'Inglés I', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'MSA', nombre: 'Matemática Superior Aplicada', correlatividad: [], aprobado: false, nota: null },
+
+  // Nivel III
+  { codigo: 'Int3', nombre: 'Integración III', correlatividad: ['Int2'], aprobado: false, nota: null },
+  { codigo: 'Termo', nombre: 'Termodinámica', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'Eco', nombre: 'Economía', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'Leg', nombre: 'Legislación', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'MEI', nombre: 'Mecánica Eléctrica Industrial', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'FQ', nombre: 'Físico Química', correlatividad: ['F2'], aprobado: false, nota: null },
+  { codigo: 'FT', nombre: 'Fenómenos de Transporte', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'QA', nombre: 'Química Analítica', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'I2', nombre: 'Inglés II', correlatividad: [], aprobado: false, nota: null },
+
+  // Nivel IV
+  { codigo: 'Int4', nombre: 'Integración IV', correlatividad: ['Int3'], aprobado: false, nota: null },
+  { codigo: 'OU1', nombre: 'Operaciones Unitarias I', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'TET', nombre: 'Tecnología de la Energía Térmica', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'Bio', nombre: 'Biotecnología', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'OU2', nombre: 'Operaciones Unitarias II', correlatividad: ['OU1'], aprobado: false, nota: null },
+  { codigo: 'IRQ', nombre: 'Ingeniería de las Reacciones Químicas', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'CEP', nombre: 'Control Estadístico de Procesos', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'OI', nombre: 'Organización Industrial', correlatividad: [], aprobado: false, nota: null },
+
+  // Nivel V
+  { codigo: 'CAP', nombre: 'Control Automático de Procesos', correlatividad: [], aprobado: false, nota: null },
+  { codigo: 'PF', nombre: 'Proyecto Final - Integración V', correlatividad: ['Int4'], aprobado: false, nota: null }
 ];
 
 function guardarEstado() {
@@ -24,13 +67,6 @@ function puedeDesbloquear(materia) {
     return req && req.aprobado;
   });
 }
-
-const container = document.getElementById('materias-container');
-const resumenDiv = document.createElement('div');
-resumenDiv.id = 'resumen';
-resumenDiv.style.margin = '30px';
-resumenDiv.style.fontWeight = 'bold';
-document.body.insertBefore(resumenDiv, container);
 
 function crearMateria(materia) {
   const div = document.createElement('div');
@@ -91,23 +127,35 @@ function desbloquearRequisitos() {
 }
 
 function actualizarResumen() {
+  const resumenDiv = document.getElementById('resumen');
   const aprobadas = materias.filter(m => m.aprobado).length;
   const total = materias.length;
   const faltantes = total - aprobadas;
   const conNotas = materias.filter(m => m.aprobado && m.nota !== null && m.nota !== '').map(m => parseFloat(m.nota));
   const promedio = conNotas.length ? (conNotas.reduce((a, b) => a + b, 0) / conNotas.length).toFixed(2) : 'N/A';
 
-  resumenDiv.innerHTML = `✅ Materias aprobadas: ${aprobadas}/${total}  | ❌ Faltan: ${faltantes}  | 📊 Promedio: ${promedio}`;
+  resumenDiv.innerHTML = `✅ Aprobadas: ${aprobadas}/${total} | ❌ Faltan: ${faltantes} | 📊 Promedio: ${promedio}`;
 }
 
-function init() {
-  cargarEstado();
-  materias.forEach(m => {
+function crearSeccionNivel(nombreNivel, materiasDelNivel) {
+  const seccion = document.createElement('div');
+  seccion.className = 'nivel';
+
+  const titulo = document.createElement('h2');
+  titulo.textContent = nombreNivel;
+  seccion.appendChild(titulo);
+
+  const grid = document.createElement('div');
+  grid.className = 'grid-container';
+
+  materiasDelNivel.forEach(m => {
     const materiaDiv = crearMateria(m);
-    container.appendChild(materiaDiv);
+    grid.appendChild(materiaDiv);
+
     if (puedeDesbloquear(m)) {
       materiaDiv.classList.remove('disabled');
     }
+
     if (m.aprobado) {
       actualizarMateria(m);
       const notaInput = materiaDiv.querySelector('.note-box');
@@ -115,6 +163,32 @@ function init() {
       notaInput.style.pointerEvents = 'auto';
     }
   });
+
+  seccion.appendChild(grid);
+  return seccion;
+}
+
+function init() {
+  cargarEstado();
+
+  const niveles = {
+    'Nivel I': materias.slice(0, 8),
+    'Nivel II': materias.slice(8, 16),
+    'Nivel III': materias.slice(16, 25),
+    'Nivel IV': materias.slice(25, 33),
+    'Nivel V': materias.slice(33)
+  };
+
+  const nivelesContainer = document.getElementById('niveles-container');
+  const resumenDiv = document.getElementById('resumen');
+  resumenDiv.style.margin = '30px';
+  resumenDiv.style.fontWeight = 'bold';
+
+  Object.entries(niveles).forEach(([nombre, listaMaterias]) => {
+    const seccion = crearSeccionNivel(nombre, listaMaterias);
+    nivelesContainer.appendChild(seccion);
+  });
+
   actualizarResumen();
 }
 
