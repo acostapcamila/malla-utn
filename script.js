@@ -1,3 +1,17 @@
+function guardarEstado() {
+  localStorage.setItem('estadoMaterias', JSON.stringify(materias));
+}
+
+function cargarEstado() {
+  const datos = localStorage.getItem('estadoMaterias');
+  if (datos) {
+    const materiasGuardadas = JSON.parse(datos);
+    materiasGuardadas.forEach((mGuardada, i) => {
+      materias[i].aprobado = mGuardada.aprobado;
+      materias[i].nota = mGuardada.nota;
+    });
+  }
+}
 const materias = [
   { codigo: 'Int1', nombre: 'Integración I', correlatividad: [], aprobado: false, nota: null },
   { codigo: 'IngSoc', nombre: 'Ingeniería y Sociedad', correlatividad: [], aprobado: false, nota: null },
@@ -97,14 +111,24 @@ function desbloquearRequisitos() {
   });
 }
 
-function init() {
+ffunction init() {
+  cargarEstado();
   materias.forEach(m => {
     const materiaDiv = crearMateria(m);
     container.appendChild(materiaDiv);
+
     if (puedeDesbloquear(m)) {
       materiaDiv.classList.remove('disabled');
     }
+
+    if (m.aprobado) {
+      actualizarMateria(m);
+      const notaInput = materiaDiv.querySelector('.note-box');
+      notaInput.value = m.nota || '';
+      notaInput.style.pointerEvents = 'auto';
+    }
   });
+}
 }
 
 init();
